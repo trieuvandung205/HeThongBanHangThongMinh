@@ -1,0 +1,189 @@
+{% extends "dashboard/base.html" %}
+
+{% block title %}
+Báo cáo Chatbot
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <h2 class="mb-4">
+        Báo cáo Chatbot AI
+    </h2>
+
+    <div class="row mb-4">
+
+        <div class="col-md-6">
+
+            <div class="card shadow-sm">
+
+                <div class="card-body text-center">
+
+                    <h5>Tổng lượt chat</h5>
+
+                    <h2>{{ chat_count }}</h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-6">
+
+            <div class="card shadow-sm">
+
+                <div class="card-body text-center">
+
+                    <h5>Người dùng</h5>
+
+                    <h2>{{ user_count }}</h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-header">
+
+            Số lượt chat theo ngày
+
+        </div>
+
+        <div class="card-body">
+
+            <canvas id="chatChart"></canvas>
+
+        </div>
+
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-6">
+
+            <div class="card shadow-sm">
+
+                <div class="card-header">
+
+                    Top sản phẩm
+
+                </div>
+
+                <div class="card-body">
+
+                    <table class="table table-bordered">
+
+                        <tr>
+
+                            <th>Sản phẩm</th>
+
+                            <th>Lượt hỏi</th>
+
+                        </tr>
+
+                        {% for item in top_products %}
+
+                        <tr>
+
+                            <td>{{ item.product__name }}</td>
+
+                            <td>{{ item.total }}</td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-6">
+
+            <div class="card shadow-sm">
+
+                <div class="card-header">
+
+                    Top người dùng
+
+                </div>
+
+                <div class="card-body">
+
+                    <table class="table table-bordered">
+
+                        <tr>
+
+                            <th>Người dùng</th>
+
+                            <th>Lượt chat</th>
+
+                        </tr>
+
+                        {% for item in top_users %}
+
+                        <tr>
+
+                            <td>{{ item.user__username }}</td>
+
+                            <td>{{ item.total }}</td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+new Chart(
+
+document.getElementById("chatChart"),
+
+{
+
+type:"line",
+
+data:{
+
+labels:{{ labels|safe }},
+
+datasets:[{
+
+label:"Lượt chat",
+
+data:{{ values|safe }}
+
+}]
+
+}
+
+}
+
+);
+
+</script>
+
+{% endblock %}

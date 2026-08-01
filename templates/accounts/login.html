@@ -1,0 +1,55 @@
+{% extends "layout/base.html" %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-5">
+
+            <div class="card shadow p-4">
+
+                <h2 class="text-center mb-4">
+                    Đăng nhập
+                </h2>
+
+                {% if error %}
+                <div class="alert alert-danger">
+                    {{ error }}
+                </div>
+                {% endif %}
+
+                <form method="POST">
+
+                    {% csrf_token %}
+
+                    <input
+                        type="text"
+                        class="form-control mb-3"
+                        name="username"
+                        placeholder="Tên đăng nhập"
+                        required>
+
+                    <input
+                        type="password"
+                        class="form-control mb-3"
+                        name="password"
+                        placeholder="Mật khẩu"
+                        required>
+
+                    <button class="btn btn-danger w-100">
+                        Đăng nhập
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

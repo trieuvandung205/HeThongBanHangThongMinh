@@ -1,0 +1,50 @@
+{% extends "dashboard/base.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <h3 class="mb-4">
+        Thêm tài khoản
+    </h3>
+
+    <div class="card">
+
+        <div class="card-body">
+
+            <form method="post">
+
+                {% csrf_token %}
+
+                {{ form.as_p }}
+
+                <div class="mb-3">
+                    <label class="form-label">
+                        Mật khẩu
+                    </label>
+
+                    <input
+                        type="password"
+                        name="password"
+                        class="form-control"
+                        placeholder="Để trống sẽ dùng mật khẩu mặc định 123456"
+                    >
+                </div>
+
+                <button type="submit" class="btn btn-success">
+                    Lưu
+                </button>
+
+                <a href="{% url 'user_list' %}" class="btn btn-secondary">
+                    Quay lại
+                </a>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends "layout/base.html" %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-5">
+            <div class="card shadow p-4">
+
+                <h2 class="text-center mb-4">
+                    Đăng ký
+                </h2>
+
+                {% if form.errors %}
+                <div class="alert alert-danger">
+                    {{ form.errors }}
+                </div>
+                {% endif %}
+
+                <form method="POST">
+                    {% csrf_token %}
+
+                    <input
+                        type="text"
+                        class="form-control mb-3"
+                        name="username"
+                        placeholder="Tên đăng nhập"
+                        value="{{ request.POST.username|default:'' }}">
+
+                    <input
+                        type="email"
+                        class="form-control mb-3"
+                        name="email"
+                        placeholder="Email"
+                        value="{{ request.POST.email|default:'' }}">
+
+                    <input
+                        type="text"
+                        class="form-control mb-3"
+                        name="phone"
+                        placeholder="Số điện thoại"
+                        value="{{ request.POST.phone|default:'' }}">
+
+                    <input
+                        type="password"
+                        class="form-control mb-3"
+                        name="password1"
+                        placeholder="Mật khẩu">
+
+                    <input
+                        type="password"
+                        class="form-control mb-3"
+                        name="password2"
+                        placeholder="Nhập lại mật khẩu">
+
+                    <button type="submit" class="btn btn-danger w-100">
+                        Đăng ký
+                    </button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

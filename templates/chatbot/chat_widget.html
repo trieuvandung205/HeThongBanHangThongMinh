@@ -1,0 +1,355 @@
+<div id="chatbot-button">
+    💬
+</div>
+
+<div id="chatbot-box">
+
+    <div id="chatbot-header">
+        SmartShop AI
+    </div>
+
+    <div id="chatbot-body">
+
+        <div class="bot-message">
+
+            Xin chào 👋<br>
+
+            Tôi có thể giúp bạn:
+
+            <ul>
+                <li>Tìm sản phẩm</li>
+                <li>Xem giá</li>
+                <li>Kiểm tra tồn kho</li>
+                <li>Hướng dẫn mua hàng</li>
+            </ul>
+
+        </div>
+
+    </div>
+
+    <div id="chatbot-footer">
+
+        <input
+            id="chatbot-input"
+            type="text"
+            placeholder="Nhập câu hỏi..."
+        >
+
+        <button id="chatbot-send">
+
+            Gửi
+
+        </button>
+
+    </div>
+
+</div>
+
+<style>
+
+#chatbot-button{
+
+position:fixed;
+
+bottom:25px;
+
+right:25px;
+
+width:60px;
+
+height:60px;
+
+border-radius:50%;
+
+background:#0d6efd;
+
+color:white;
+
+font-size:28px;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+cursor:pointer;
+
+z-index:9999;
+
+box-shadow:0 5px 15px rgba(0,0,0,.3);
+
+}
+
+#chatbot-box{
+
+position:fixed;
+
+bottom:95px;
+
+right:25px;
+
+width:350px;
+
+height:500px;
+
+background:white;
+
+border-radius:12px;
+
+display:none;
+
+flex-direction:column;
+
+overflow:hidden;
+
+box-shadow:0 5px 20px rgba(0,0,0,.25);
+
+z-index:9999;
+
+}
+
+#chatbot-header{
+
+background:#0d6efd;
+
+color:white;
+
+padding:15px;
+
+font-size:18px;
+
+font-weight:bold;
+
+}
+
+#chatbot-body{
+
+flex:1;
+
+padding:15px;
+
+overflow-y:auto;
+
+background:#f8f9fa;
+
+}
+
+#chatbot-footer{
+
+display:flex;
+
+padding:10px;
+
+border-top:1px solid #ddd;
+
+}
+
+#chatbot-input{
+
+flex:1;
+
+padding:8px;
+
+}
+
+#chatbot-send{
+
+margin-left:10px;
+
+padding:8px 15px;
+
+background:#0d6efd;
+
+color:white;
+
+border:none;
+
+cursor:pointer;
+
+}
+
+.user-message{
+
+background:#0d6efd;
+
+color:white;
+
+padding:10px;
+
+border-radius:10px;
+
+margin-bottom:10px;
+
+text-align:right;
+
+}
+
+.bot-message{
+
+background:#eeeeee;
+
+padding:10px;
+
+border-radius:10px;
+
+margin-bottom:10px;
+
+white-space:pre-line;
+
+}
+
+</style>
+
+<script>
+
+const chatbotButton=document.getElementById("chatbot-button");
+
+const chatbotBox=document.getElementById("chatbot-box");
+
+const chatbotBody=document.getElementById("chatbot-body");
+
+const chatbotInput=document.getElementById("chatbot-input");
+
+const chatbotSend=document.getElementById("chatbot-send");
+
+chatbotButton.onclick=function(){
+
+if(chatbotBox.style.display==="flex"){
+
+chatbotBox.style.display="none";
+
+}else{
+
+chatbotBox.style.display="flex";
+
+}
+
+};
+
+function addUser(text){
+
+chatbotBody.innerHTML+=`
+<div class="user-message">
+${text}
+</div>
+`;
+
+chatbotBody.scrollTop=chatbotBody.scrollHeight;
+
+}
+
+function addBot(text){
+
+chatbotBody.innerHTML+=`
+<div class="bot-message">
+${text}
+</div>
+`;
+
+chatbotBody.scrollTop=chatbotBody.scrollHeight;
+
+}
+
+chatbotSend.onclick=function(){
+
+sendMessage();
+
+};
+
+chatbotInput.addEventListener("keypress",function(e){
+
+if(e.key==="Enter"){
+
+sendMessage();
+
+}
+
+});
+function getCookie(name){
+
+    let cookieValue=null;
+
+    if(document.cookie && document.cookie!==""){
+
+        const cookies=document.cookie.split(";");
+
+        for(let i=0;i<cookies.length;i++){
+
+            const cookie=cookies[i].trim();
+
+            if(cookie.substring(0,name.length+1)===name+"="){
+
+                cookieValue=decodeURIComponent(
+                    cookie.substring(name.length+1)
+                );
+
+                break;
+
+            }
+
+        }
+
+    }
+
+    return cookieValue;
+
+}
+
+const csrftoken=getCookie("csrftoken");
+function sendMessage(){
+
+const message=chatbotInput.value.trim();
+
+if(message===""){
+
+return;
+
+}
+
+addUser(message);
+
+chatbotInput.value="";
+
+fetch("/chatbot/ask/",{
+
+method:"POST",
+
+headers:{
+
+"Content-Type":"application/json"
+
+},
+
+body:JSON.stringify({
+
+message:message
+
+})
+
+})
+
+.then(response=>response.json())
+
+.then(data=>{
+
+if(data.success){
+
+addBot(data.reply);
+
+}else{
+
+addBot("❌ "+data.reply);
+
+}
+
+})
+.catch(()=>{
+
+addBot("Không thể kết nối tới chatbot.");
+
+});
+
+}
+
+</script>

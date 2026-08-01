@@ -1,0 +1,58 @@
+{% extends "layout/base.html" %}
+{% load currency %}
+{% block content %}
+
+<div class="container py-5">
+
+    <h2 class="mb-4">
+        Đơn hàng của tôi
+    </h2>
+
+    {% if orders %}
+
+    <table class="table table-bordered">
+
+        <thead>
+
+            <tr>
+                <th>Mã đơn</th>
+                <th>Ngày đặt</th>
+                <th>Tổng tiền</th>
+                <th>Trạng thái</th>
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            {% for order in orders %}
+
+            <tr>
+
+                <td>#{{ order.id }}</td>
+
+                <td>{{ order.created_at }}</td>
+
+                <td>{{ order.total_price|vnd }} VNĐ</td>
+
+                <td>{{ order.get_status_display }}</td>
+
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+    {% else %}
+
+    <div class="alert alert-warning">
+        Bạn chưa có đơn hàng nào.
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

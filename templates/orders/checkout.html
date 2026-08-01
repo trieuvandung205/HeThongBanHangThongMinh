@@ -1,0 +1,157 @@
+{% extends "layout/base.html" %}
+{% load currency %}
+{% block content %}
+
+<div class="container mt-5 mb-5">
+
+    <div class="row">
+
+        <div class="col-lg-8">
+
+            <div class="card shadow">
+
+                <div class="card-header">
+
+                    <h3>Thông tin đặt hàng</h3>
+
+                </div>
+
+                <div class="card-body">
+
+                    <form method="post">
+
+                        {% csrf_token %}
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+
+                                Họ và tên
+
+                            </label>
+
+                            {{ form.full_name }}
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+
+                                Số điện thoại
+
+                            </label>
+
+                            {{ form.phone }}
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+
+                                Địa chỉ
+
+                            </label>
+
+                            {{ form.address }}
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+
+                                Ghi chú
+
+                            </label>
+
+                            {{ form.note }}
+
+                        </div>
+
+                        <button
+                            type="submit"
+                            class="btn btn-success">
+
+                            Đặt hàng
+
+                        </button>
+
+                        <a
+                            href="{% url 'cart' %}"
+                            class="btn btn-secondary">
+
+                            Quay lại
+
+                        </a>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-4">
+
+            <div class="card shadow">
+
+                <div class="card-header">
+
+                    <h4>Giỏ hàng</h4>
+
+                </div>
+
+                <div class="card-body">
+
+                    {% for item in cart.items.all %}
+
+                        <div class="border-bottom pb-2 mb-2">
+
+                            <strong>
+
+                                {{ item.product.name }}
+
+                            </strong>
+
+                            <br>
+
+                            SL: {{ item.quantity }}
+
+                            <br>
+
+                            Giá: {{ item.product.price|vnd }} VNĐ
+
+                            <br>
+
+                            Thành tiền:
+
+                            {{ item.product.price|vnd }} VNĐ
+
+                        </div>
+
+                    {% endfor %}
+
+                    <hr>
+
+                    <h5 class="text-end">
+
+                        Tổng:
+
+                        {{ cart.items.all|length }} sản phẩm
+
+                    </h5>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

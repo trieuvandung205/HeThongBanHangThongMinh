@@ -1,0 +1,130 @@
+{% extends "staff/base.html" %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+
+    <div class="col-lg-8">
+
+        <div class="card shadow">
+
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">
+                    Chỉnh sửa sản phẩm
+                </h4>
+            </div>
+
+            <div class="card-body">
+
+                <form method="post" enctype="multipart/form-data">
+
+                    {% csrf_token %}
+
+                    <div class="mb-3">
+                        <label class="form-label">
+                            Tên sản phẩm
+                        </label>
+                        {{ form.name }}
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">
+                            Danh mục
+                        </label>
+                        {{ form.category }}
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-md-6">
+
+                            <div class="mb-3">
+                                <label class="form-label">
+                                    Giá
+                                </label>
+
+                                {{ form.price }}
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-6">
+
+                            <div class="mb-3">
+
+                                <label class="form-label">
+                                    Tồn kho
+                                </label>
+
+                                {{ form.stock }}
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Mô tả
+                        </label>
+
+                        {{ form.description }}
+
+                    </div>
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Ảnh mới
+                        </label>
+
+                        {{ form.image }}
+
+                    </div>
+
+                    {% if product.image %}
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+
+                            Ảnh hiện tại
+
+                        </label>
+
+                        <br>
+
+                        <img src="{{ product.image.url }}"
+                             width="180"
+                             class="img-thumbnail">
+
+                    </div>
+
+                    {% endif %}
+
+                    <button class="btn btn-success">
+
+                        Lưu thay đổi
+
+                    </button>
+
+                    <a href="{% url 'staff_product_list' %}" class="btn btn-secondary">
+
+                        Quay lại
+
+                    </a>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

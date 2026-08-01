@@ -1,0 +1,147 @@
+{% extends "dashboard/base.html" %}
+
+{% block content %}
+
+<div class="container-fluid mt-4">
+
+    <div class="card shadow">
+
+        <div class="card-header">
+
+            <h3>
+
+                Chi tiết đơn hàng #{{ order.id }}
+
+            </h3>
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="row mb-4">
+
+                <div class="col-md-6">
+
+                    <h5>Thông tin khách hàng</h5>
+
+                    <p>
+
+                        <strong>Tài khoản:</strong>
+
+                        {{ order.user.username }}
+
+                    </p>
+
+                    <p>
+
+                        <strong>Email:</strong>
+
+                        {{ order.user.email }}
+
+                    </p>
+
+                    <p>
+
+                        <strong>Ngày đặt:</strong>
+
+                        {{ order.created_at }}
+
+                    </p>
+
+                </div>
+
+                <div class="col-md-6">
+
+                    <h5>Đơn hàng</h5>
+
+                    <p>
+
+                        <strong>Trạng thái:</strong>
+
+                        {{ order.get_status_display }}
+
+                    </p>
+
+                    <p>
+
+                        <strong>Tổng tiền:</strong>
+
+                        {{ order.total_price }} VNĐ
+
+                    </p>
+
+                </div>
+
+            </div>
+
+            <table class="table table-bordered">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Sản phẩm</th>
+
+                        <th>Giá</th>
+
+                        <th>Số lượng</th>
+
+                        <th>Tạm tính</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for item in items %}
+
+                    <tr>
+
+                        <td>
+
+                            {{ item.product.name }}
+
+                        </td>
+
+                        <td>
+
+                            {{ item.price }}
+
+                        </td>
+
+                        <td>
+
+                            {{ item.quantity }}
+
+                        </td>
+
+                        <td>
+
+                            {{ item.subtotal }}
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+            <a
+                href="{% url 'order_list' %}"
+                class="btn btn-secondary">
+
+                Quay lại
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

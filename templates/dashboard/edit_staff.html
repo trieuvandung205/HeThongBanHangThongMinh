@@ -1,0 +1,78 @@
+{% extends "dashboard/base.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <h3 class="mb-4">
+        Sửa nhân viên
+    </h3>
+
+    <form method="post">
+
+        {% csrf_token %}
+
+        <div class="mb-3">
+            <label class="form-label">
+                Tên đăng nhập
+            </label>
+            {{ form.username }}
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">
+                Họ
+            </label>
+            {{ form.first_name }}
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">
+                Tên
+            </label>
+            {{ form.last_name }}
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">
+                Email
+            </label>
+            {{ form.email }}
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">
+                Số điện thoại
+            </label>
+            {{ form.phone }}
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">
+                Trạng thái
+            </label>
+
+            <select name="is_active" class="form-select">
+                <option value="1" {% if staff.is_active %}selected{% endif %}>
+                    Đang hoạt động
+                </option>
+
+                <option value="0" {% if not staff.is_active %}selected{% endif %}>
+                    Đã khóa
+                </option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">
+            Cập nhật
+        </button>
+
+        <a href="{% url 'staff_list' %}" class="btn btn-secondary">
+            Quay lại
+        </a>
+
+    </form>
+
+</div>
+
+{% endblock %}

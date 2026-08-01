@@ -1,0 +1,199 @@
+{% extends 'dashboard/base.html' %}
+{% load currency %}
+{% block content %}
+
+<div class="container-fluid">
+
+    <div class="row g-4 mb-4">
+
+        <div class="col-lg-3 col-md-6">
+            <div class="stat-card">
+                <i class="bi bi-box-seam fs-1 text-primary"></i>
+                <h2>{{ product_count }}</h2>
+                <p>Tổng sản phẩm</p>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+            <div class="stat-card">
+                <i class="bi bi-grid fs-1 text-success"></i>
+                <h2>{{ category_count }}</h2>
+                <p>Danh mục</p>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+            <div class="stat-card">
+                <i class="bi bi-cart-check fs-1 text-warning"></i>
+                <h2>{{ order_count }}</h2>
+                <p>Đơn hàng</p>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+            <div class="stat-card">
+                <i class="bi bi-people fs-1 text-danger"></i>
+                <h2>{{ user_count }}</h2>
+                <p>Người dùng</p>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="card">
+
+        <div class="card-header">
+            <h5 class="mb-0">
+                Danh sách sản phẩm
+            </h5>
+        </div>
+
+        <div class="card-body">
+
+            <form method="GET" class="row g-3 mb-4">
+
+                <div class="col-lg-6">
+                    <input
+                        type="text"
+                        name="keyword"
+                        value="{{ keyword }}"
+                        class="form-control"
+                        placeholder="Tìm kiếm sản phẩm..."
+                    >
+                </div>
+
+                <div class="col-lg-4">
+                    <select name="category" class="form-select">
+
+                        <option value="">
+                            Tất cả danh mục
+                        </option>
+
+                        {% for category in categories %}
+                        <option
+                            value="{{ category.id }}"
+                            {% if selected_category == category.id|stringformat:"s" %}
+                                selected
+                            {% endif %}
+                        >
+                            {{ category.name }}
+                        </option>
+                        {% endfor %}
+
+                    </select>
+                </div>
+
+                <div class="col-lg-2 d-grid">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-search"></i>
+                        Tìm
+                    </button>
+                </div>
+
+            </form>
+
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle">
+
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Ảnh</th>
+                            <th>Tên sản phẩm</th>
+                            <th>Danh mục</th>
+                            <th>Giá</th>
+                            <th>Tồn kho</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        {% for product in products %}
+
+                        <tr>
+
+                            <td>{{ product.id }}</td>
+
+                            <td>
+                                {% if product.image %}
+                                    <img
+                                        src="{{ product.image.url }}"
+                                        width="60"
+                                        height="60"
+                                        style="object-fit:cover;border-radius:8px;"
+                                    >
+                                {% else %}
+                                    <span class="text-muted">Không có ảnh</span>
+                                {% endif %}
+                            </td>
+
+                            <td><strong>{{ product.name }}</strong></td>
+
+                            <td>{{ product.category.name }}</td>
+
+                            <td>{{ product.price|vnd }} VNĐ</td>
+
+                            <td>{{ product.stock }}</td>
+
+                        </tr>
+
+                        {% empty %}
+
+                        <tr>
+                            <td colspan="6" class="text-center">
+                                Không có sản phẩm.
+                            </td>
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            {% if products.has_other_pages %}
+
+            <nav class="mt-4">
+
+                <ul class="pagination justify-content-center">
+
+                    {% if products.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ products.previous_page_number }}">
+                            &laquo;
+                        </a>
+                    </li>
+                    {% endif %}
+
+                    {% for i in products.paginator.page_range %}
+                    <li class="page-item {% if products.number == i %}active{% endif %}">
+                        <a class="page-link" href="?page={{ i }}">
+                            {{ i }}
+                        </a>
+                    </li>
+                    {% endfor %}
+
+                    {% if products.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ products.next_page_number }}">
+                            &raquo;
+                        </a>
+                    </li>
+                    {% endif %}
+
+                </ul>
+
+            </nav>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

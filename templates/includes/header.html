@@ -1,0 +1,368 @@
+{% load static %}
+
+<!-- ================= TOP BAR ================= -->
+
+<div class="top-bar">
+
+    <div class="container">
+
+        <div class="top-left">
+
+            <a href="#">
+                🔥 Flash Sale
+            </a>
+
+            <a href="#">
+                🎁 Voucher
+            </a>
+
+            <a href="#">
+                🚚 Miễn phí vận chuyển
+            </a>
+
+            <a href="#">
+                🤖 AI hỗ trợ 24/7
+            </a>
+
+        </div>
+
+        <div class="top-right">
+
+            {% if user.is_authenticated %}
+
+                <span>
+
+                    Xin chào,
+
+                    <b>{{ user.username }}</b>
+
+                </span>
+
+                <a href="{% url 'logout' %}">
+
+                    Đăng xuất
+
+                </a>
+
+            {% else %}
+
+                <a href="{% url 'login' %}">
+
+                    Đăng nhập
+
+                </a>
+
+                <a href="{% url 'register' %}">
+
+                    Đăng ký
+
+                </a>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- ================= HEADER ================= -->
+
+<header class="main-header">
+
+<div class="container">
+
+<div class="header-row">
+
+<!-- LOGO -->
+
+<div class="logo-box">
+
+<a
+href="{% url 'home' %}"
+class="logo">
+
+<i class="bi bi-bag-heart-fill"></i>
+
+<span>
+
+SmartShop AI
+
+</span>
+
+</a>
+
+</div>
+
+
+
+<!-- SEARCH -->
+
+<div class="search-box">
+
+<form
+action="{% url 'search' %}"
+method="GET"
+class="search-form">
+
+<input
+
+id="search-input"
+
+type="search"
+
+name="q"
+
+placeholder="Bạn cần tìm gì hôm nay..."
+
+autocomplete="off"
+
+value="{{ request.GET.q }}">
+
+<button type="submit">
+
+<i class="bi bi-search"></i>
+
+</button>
+
+<div id="search-suggest"></div>
+
+</form>
+
+</div>
+
+
+
+<!-- RIGHT -->
+
+<div class="header-right">
+
+<a
+href="{% url 'cart' %}"
+class="header-icon">
+
+<i class="bi bi-cart3"></i>
+
+{% if cart_count %}
+
+<span class="cart-count">
+
+{{ cart_count }}
+
+</span>
+
+{% endif %}
+
+</a>
+
+{% if user.is_authenticated %}
+
+<div class="dropdown">
+
+<a
+
+class="header-user dropdown-toggle"
+
+href="#"
+
+data-bs-toggle="dropdown">
+
+<i class="bi bi-person-circle"></i>
+
+{{ user.username }}
+
+</a>
+
+<ul class="dropdown-menu dropdown-menu-end">
+
+<li>
+
+<a
+class="dropdown-item"
+href="{% url 'my_orders' %}">
+
+Đơn hàng
+
+</a>
+
+</li>
+
+{% if user.is_staff %}
+
+<li>
+
+<a
+class="dropdown-item"
+href="{% url 'dashboard' %}">
+
+Dashboard
+
+</a>
+
+</li>
+
+{% endif %}
+
+<li>
+
+<hr>
+
+</li>
+
+<li>
+
+<a
+class="dropdown-item text-danger"
+href="{% url 'logout' %}">
+
+Đăng xuất
+
+</a>
+
+</li>
+
+</ul>
+
+</div>
+
+{% else %}
+
+<a
+href="{% url 'login' %}"
+class="login-btn">
+
+Đăng nhập
+
+</a>
+
+<a
+href="{% url 'register' %}"
+class="register-btn">
+
+Đăng ký
+
+</a>
+
+{% endif %}
+
+</div>
+
+</div>
+
+</div>
+
+</header>
+
+
+
+<!-- ================= MENU ================= -->
+
+<nav class="menu-bar">
+
+<div class="container">
+
+<ul class="menu-list">
+
+<li>
+
+<a href="{% url 'home' %}">
+
+Trang chủ
+
+</a>
+
+</li>
+
+<li>
+
+<a href="{% url 'product_list' %}">
+
+Sản phẩm
+
+</a>
+
+</li>
+
+<li class="dropdown">
+
+<a
+
+href="#"
+
+class="dropdown-toggle"
+
+data-bs-toggle="dropdown">
+
+Danh mục
+
+</a>
+
+<ul class="dropdown-menu">
+
+{% for c in categories %}
+
+<li>
+
+<a
+class="dropdown-item"
+href="{% url 'category' c.id %}">
+
+{{ c.name }}
+
+</a>
+
+</li>
+
+{% endfor %}
+
+</ul>
+
+</li>
+
+<li>
+
+<a href="#">
+
+Flash Sale
+
+</a>
+
+</li>
+
+<li>
+
+<a href="#">
+
+Sản phẩm mới
+
+</a>
+
+</li>
+
+<li>
+
+<a href="#">
+
+Bán chạy
+
+</a>
+
+</li>
+
+<li>
+
+<a href="#">
+
+AI tư vấn
+
+</a>
+
+</li>
+
+</ul>
+
+</div>
+
+</nav>

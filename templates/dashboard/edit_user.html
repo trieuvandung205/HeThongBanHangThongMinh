@@ -1,0 +1,128 @@
+{% extends "dashboard/base.html" %}
+
+{% block content %}
+
+<h2 class="mb-4">
+
+Cập nhật tài khoản
+
+</h2>
+
+<div class="card">
+
+<div class="card-body">
+
+<form method="post">
+
+{% csrf_token %}
+
+<div class="mb-3">
+
+<label>
+
+Tên đăng nhập
+
+</label>
+
+<input
+
+class="form-control"
+
+value="{{ user.username }}"
+
+disabled
+
+>
+
+</div>
+
+<div class="mb-3">
+
+<label>
+
+Vai trò
+
+</label>
+
+<select
+
+class="form-select"
+
+name="role"
+
+>
+
+<option value="customer"
+{% if user.role == "customer" %}selected{% endif %}>
+Customer
+</option>
+
+<option value="staff"
+{% if user.role == "staff" %}selected{% endif %}>
+Staff
+</option>
+
+<option value="admin"
+{% if user.role == "admin" %}selected{% endif %}>
+Admin
+</option>
+
+</select>
+
+</div>
+
+<div class="mb-3">
+
+<label>
+
+Trạng thái
+
+</label>
+
+<select
+
+class="form-select"
+
+name="is_active"
+
+>
+
+<option value="1"
+{% if user.is_active %}selected{% endif %}>
+Hoạt động
+</option>
+
+<option value="0"
+{% if not user.is_active %}selected{% endif %}>
+Khóa tài khoản
+</option>
+
+</select>
+
+</div>
+
+<button class="btn btn-success">
+
+Lưu
+
+</button>
+
+<a
+
+href="{% url 'user_list' %}"
+
+class="btn btn-secondary"
+
+>
+
+Quay lại
+
+</a>
+
+</form>
+
+</div>
+
+</div>
+
+{% endblock %}

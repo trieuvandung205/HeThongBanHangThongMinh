@@ -1,0 +1,192 @@
+{% load static %}
+
+<footer class="footer mt-5">
+
+    <div class="container py-5">
+
+        <div class="row">
+
+            <div class="col-lg-4 col-md-6 mb-4">
+
+                <h4 class="fw-bold mb-3">
+
+                    <i class="bi bi-bag-heart-fill text-warning me-2"></i>
+
+                    SmartShop AI
+
+                </h4>
+
+                <p class="text-light">
+
+                    SmartShop AI là website bán hàng tích hợp trí tuệ nhân tạo,
+                    giúp người dùng tìm kiếm, mua sắm và nhận tư vấn sản phẩm
+                    nhanh chóng.
+
+                </p>
+
+            </div>
+
+            <div class="col-lg-2 col-md-6 mb-4">
+
+                <h5 class="mb-3">
+
+                    Liên kết
+
+                </h5>
+
+                <ul class="list-unstyled">
+
+                    <li class="mb-2">
+
+                        <a href="{% url 'home' %}">
+
+                            Trang chủ
+
+                        </a>
+
+                    </li>
+
+                    <li class="mb-2">
+
+                        <a href="{% url 'product_list' %}">
+
+                            Sản phẩm
+
+                        </a>
+
+                    </li>
+
+                    <li class="mb-2">
+
+                        <a href="{% url 'cart' %}">
+
+                            Giỏ hàng
+
+                        </a>
+
+                    </li>
+
+                    {% if user.is_authenticated %}
+
+                    <li>
+
+                        <a href="{% url 'my_orders' %}">
+
+                            Đơn hàng
+
+                        </a>
+
+                    </li>
+
+                    {% endif %}
+
+                </ul>
+
+            </div>
+
+            <div class="col-lg-3 col-md-6 mb-4">
+
+                <h5 class="mb-3">
+
+                    Liên hệ
+
+                </h5>
+
+                <p>
+
+                    <i class="bi bi-geo-alt-fill me-2"></i>
+
+                    Việt Nam
+
+                </p>
+
+                <p>
+
+                    <i class="bi bi-envelope-fill me-2"></i>
+
+                    support@smartshopai.com
+
+                </p>
+
+                <p>
+
+                    <i class="bi bi-telephone-fill me-2"></i>
+
+                    0123 456 789
+
+                </p>
+
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+
+                <h5 class="mb-3">
+
+                    Theo dõi
+
+                </h5>
+
+                <div class="d-flex gap-3 fs-4">
+
+                    <a href="#">
+
+                        <i class="bi bi-facebook"></i>
+
+                    </a>
+
+                    <a href="#">
+
+                        <i class="bi bi-instagram"></i>
+
+                    </a>
+
+                    <a href="#">
+
+                        <i class="bi bi-youtube"></i>
+
+                    </a>
+
+                    <a href="#">
+
+                        <i class="bi bi-tiktok"></i>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <hr class="border-secondary my-4">
+                <div class="row align-items-center">
+
+            <div class="col-md-6 text-center text-md-start">
+
+                <small>
+
+                    © {% now "Y" %} SmartShop AI. All rights reserved.
+
+                </small>
+
+            </div>
+
+            <div class="col-md-6 text-center text-md-end">
+
+                <small>
+
+                    Phát triển bằng
+
+                    <i class="bi bi-heart-fill text-danger"></i>
+
+                    Django & Bootstrap 5
+
+                </small>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</footer>
